@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ua.np.maven</groupId>
+        <artifactId>npFuseParent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>ua.np.services</groupId>
+    <artifactId>mssql-hikari-cp</artifactId>
+    <version>1.0.5-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+    <name>Nova Poshta :: HikariCP :: MS SQL Server</name>
+
+    <properties>
+        <profileConfigDir>src/main/fabric8/localhost</profileConfigDir>
+        <jolokiaUrl>http://localhost:8181/jolokia</jolokiaUrl>
+        <osgi.import.pkg>javax.sql,org.slf4j,com.zaxxer.hikari</osgi.import.pkg>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP-java6</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-blueprint</artifactId>
+        </dependency>
+
+        <!--TEST-->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test-blueprint</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-maven-plugin</artifactId>
+                <configuration>
+                    <profile>np-db_mssql_cp</profile>
+                    <parentProfiles>default</parentProfiles>
+                    <bundles>
+                        wrap:mvn:com.microsoft.sqlserver/sqljdbc4/${sqljdbc4.version}
+                        wrap:mvn:org.javassist/javassist/${javassist.version}
+                        mvn:com.zaxxer/HikariCP-java6/${hikariCP.version}
+                        mvn:ua.np.services/mssql-hikari-cp/${project.version}
+                    </bundles>
+                    <includeArtifact>false</includeArtifact>
+                    <profileConfigDir>${profileConfigDir}</profileConfigDir>
+                    <jolokiaUrl>${jolokiaUrl}</jolokiaUrl>
+                    <serverId>${server.id}</serverId>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

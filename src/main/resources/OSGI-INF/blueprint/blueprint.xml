@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<blueprint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+           xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xsi:schemaLocation="
+http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
+">
+
+    <cm:property-placeholder id="snpConfig" persistent-id="ua.np.services.dbcp.snp" update-strategy="reload"/>
+
+    <bean id="snpConnectionPool" class="com.zaxxer.hikari.HikariDataSource">
+        <property name="driverClassName" value="${ua.np.services.dbcp.snp.driverClassName}"/>
+        <property name="username" value="${ua.np.services.dbcp.snp.username}"/>
+        <property name="password" value="${ua.np.services.dbcp.snp.password}"/>
+        <property name="jdbcUrl" value="${ua.np.services.dbcp.snp.jdbcUrl}"/>
+        <property name="autoCommit" value="${ua.np.services.dbcp.snp.autoCommit}"/>
+        <property name="readOnly" value="${ua.np.services.dbcp.snp.readOnly}"/>
+        <property name="connectionTimeout" value="${ua.np.services.dbcp.snp.connectionTimeout}"/>
+        <property name="idleTimeout" value="${ua.np.services.dbcp.snp.idleTimeout}"/>
+        <property name="maxLifetime" value="${ua.np.services.dbcp.snp.maxLifetime}"/>
+        <property name="leakDetectionThreshold" value="${ua.np.services.dbcp.snp.leakDetectionThreshold}"/>
+        <property name="initializationFailFast" value="${ua.np.services.dbcp.snp.initializationFailFast}"/>
+        <property name="jdbc4ConnectionTest" value="${ua.np.services.dbcp.snp.jdbc4ConnectionTest}"/>
+        <property name="minimumIdle" value="${ua.np.services.dbcp.snp.minimumIdle}"/>
+        <property name="maximumPoolSize" value="${ua.np.services.dbcp.snp.maximumPoolSize}"/>
+        <property name="registerMbeans" value="${ua.np.services.dbcp.snp.registerMbeans}"/>
+        <property name="isolateInternalQueries" value="${ua.np.services.dbcp.snp.isolateInternalQueries}"/>
+    </bean>
+
+    <service id="snpDataSource" ref="snpConnectionPool" activation="eager" interface="javax.sql.DataSource">
+        <service-properties>
+            <entry key="osgi.jndi.service.name" value="jdbc/snpDataSource"/>
+        </service-properties>
+    </service>
+
+</blueprint>
