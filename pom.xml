@@ -14,7 +14,7 @@
     <artifactId>mssql-hikari-cp</artifactId>
     <version>1.0.5-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>Nova Poshta :: HikariCP :: MS SQL Server</name>
+    <name>HikariCP :: MS SQL Server</name>
 
     <properties>
         <profileConfigDir>src/main/fabric8/localhost</profileConfigDir>
