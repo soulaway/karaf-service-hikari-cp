@@ -8,10 +8,6 @@ import java.sql.Connection;
 import java.util.Dictionary;
 import javax.sql.DataSource;
 
-
-/**
- * Created by zabuga.m on 10.08.2014.
- */
 public class DataSourceTest extends CamelBlueprintTestSupport {
 
     @Test
